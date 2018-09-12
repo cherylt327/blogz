@@ -15,20 +15,31 @@
                 font-size: 24px;
              }
 
+
+ 
+
+
+
         </style>
     </head>
 <body>
-    <div style = "float:left; padding: 15px;"><a href="./blog">Main Blog Page</a></div>
-    <div style = "padding: 15px;"><a href="./newpost">Add a Blog Entry</a></div>
+    <span style =  padding: 15px;"><a href="./blog">Main Blog Page</a></span>
+        <span style = "padding: 15px;"><a href="./index">Contributors</a></span>
+        <span style = "padding: 15px;"><a href="./newpost">Add a Blog Entry</a></span>
+        <span style = "padding: 15px;"><a href="./login">Login</a></span>
+        <span style = "padding: 15px;"><a href="./logout">Log Out</a></span>
+      
+   
     
     
-    {#
+    
+    
     {% with messages = get_flashed_messages(with_categories=True) %} 
           {% for category,message in messages %}
            <p class='{{category}}'>{{message}}</p>
            {% endfor %}
     {% endwith %}
-    #} 
+    
     {% block content %}
     {% endblock %}
 

@@ -1,5 +1,8 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
+import hashlib
+import string
+
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -24,7 +27,7 @@ class Blog(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True)
-    password = db.Column(db.String(20))
+    password = db.Column(db.String(500))
     blogs = db.relationship('Blog', backref='owner')
 
     def __init__(self, username, password):
@@ -110,7 +113,8 @@ def register():
 
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
-            new_user = User(username, password)
+            hash = hashlib.sha256(str.encode(password)).hexidigest()
+            new_user = User(username, hash)
             db.session.add(new_user)
             db.session.commit()
             session['username']=username
@@ -127,7 +131,8 @@ def register():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        password = request.form['password']
+        unhashed = request.form['password']
+        password = hashlib.sha256(str.encode(unhashed)).hexdigest()
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             session['username']=username

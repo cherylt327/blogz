@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="heading"><h1>Blogz</h1></div>
+
+{% for e in entry %}
+            <div class='title'><a href="./blog?id={{e.id}}">{{e.title}}</a></div>
+            
+            <div>{{e.body}}</div>
+            written by: <a href="./author_entry?id={{e.owner.id}}">{{e.owner.username}}</a>
+           
+            <hr />
+            {% endfor %}
+ 
+    
+
+   
+
+
+
+{% endblock %}
