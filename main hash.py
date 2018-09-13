@@ -113,7 +113,7 @@ def register():
 
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
-            hash = hashlib.sha256(str.encode(password)).hexidigest()
+            hash = hashlib.sha256(str.encode(password)).hexdigest()
             new_user = User(username, hash)
             db.session.add(new_user)
             db.session.commit()
